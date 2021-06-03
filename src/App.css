@@ -1,38 +1,71 @@
-.App {
+.active {
+  color: red;
+}
+
+body {
+  background: gold;
+  color: darkmagenta;
+  font-family: 'Muli', sans-serif;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  box-shadow: 0 -200px 100px -120px crimson inset;
+  animation: background 10s infinite alternate;
+}
+
+@keyframes background {
+  50% {
+    background: skyblue;
+    box-shadow: 0 -200px 100px -100px yellowgreen inset;
+  }
+}
+
+h1 {
+  font-size: 45px;
+  margin: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-wrapper {
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.control {
+  background-color: antiquewhite;
+  margin-top: 25px;
+  height: 300px;
+  width: 400px;
+  border: solid darkmagenta 7px;
+  border-radius: 10px 10px 10px 10px;
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.start {
+  margin-top: 90px;
+  clear:both; text-align:right;
+  margin-right: 110px;
+}
+.max {
+  margin-top: 10px;
+  clear:both; text-align:right;
+  margin-right: 110px;
+}
+
+.input {
+  border-radius: 10px 10px 10px 10px;
+  border: solid 2px darkmagenta;
+  width: 80px;
+  height: 15px;
+  text-align: center;
+}
+
+.control .set {
+  margin-top: 20px;
+  background-color: crimson;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
