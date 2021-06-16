@@ -1,83 +1,62 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Count} from "./components/Count";
 import {ControlDisplay} from "./components/ControlDisplay";
 import {SettingsDisplay} from "./components/SettingsDisplay";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./state/redux-store";
+import {Decrement, Increment, InitialStateType, MaxValue, Reset, SetError, StartValue} from "./state/count-reducer";
 
 function App() {
 
-    const [count, setCount] = useState<number>(0);
-    const [startValue, setStartValue] = useState<number>(0);
-    const [maxValue, setMaxValue] = useState<number>(0);
-    const [isError, setIsError] = useState<boolean | null>(false);
+    const state = useSelector<AppStateType, InitialStateType>(state => state.count)
 
-    useEffect(() => {
-        let startAsString = localStorage.getItem('startValue')
-        if (startAsString) {
-            let newValue = JSON.parse(startAsString)
-            setStartValue(newValue)
-        }
-    }, [])
-
-    useEffect(() => {
-        let maxAsString = localStorage.getItem('maxValue')
-        if (maxAsString) {
-            let newValue = JSON.parse(maxAsString)
-            setMaxValue(newValue)
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem("startValue", JSON.stringify(startValue))
-        localStorage.setItem("maxValue", JSON.stringify(maxValue))
-    }, [startValue, maxValue])
+    const dispatch = useDispatch()
 
     function increment() {
-        if (count < maxValue) {
-            setCount(count +1)
-        }
+           dispatch(Increment())
     }
     function decrement() {
-        if (count > startValue) {
-            setCount(count -1)
-        }
+            dispatch(Decrement())
     }
     function reset() {
-        setCount(startValue)
+        dispatch(Reset())
     }
-    function startValueCounter(value: number) {
-        setStartValue(value)
+    function startValue(value: number) {
+        dispatch(StartValue(value))
     }
-    function maxValueCounter(value: number) {
-        setMaxValue(value)
+    function maxValue(value: number) {
+        dispatch(MaxValue(value))
     }
 
-    function onClickSetValue() {
-        setIsError(null)
-        if (startValue < maxValue) setCount(startValue)
-        else setIsError(true)
+    function setValue() {
+        dispatch(SetError(null))
+        if (state.start < state.max)
+            dispatch(StartValue(state.start))
+        else
+            dispatch(SetError(true))
     }
 
     return (
         <div>
             <Count
-                count={count}
-                isError={isError}
-                maxValue={maxValue}/>
+                count={state.count}
+                isError={state.isError}
+                max={state.max}/>
             <ControlDisplay
-                count={count}
+                count={state.count}
                 increment={increment}
                 decrement={decrement}
                 reset={reset}
+                start={state.start}
+                max={state.max}/>
+            <SettingsDisplay
+                count={state.count}
+                start={state.start}
+                max={state.max}
+                setValue={setValue}
                 startValue={startValue}
                 maxValue={maxValue}/>
-            <SettingsDisplay
-                count={count}
-                startValue={startValue}
-                maxValue={maxValue}
-                onClickSetValue={onClickSetValue}
-                startValueCounter={startValueCounter}
-                maxValueCounter={maxValueCounter}/>
         </div>
     )
 }

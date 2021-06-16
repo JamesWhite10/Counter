@@ -3,14 +3,17 @@ import React from "react";
 
 type ControlPropsType = {
     count: number
+    start: number
+    max: number
     increment: () => void
     decrement: () => void
     reset: () => void
-    startValue: number
-    maxValue: number
 }
 
-export const ControlDisplay: React.FC<ControlPropsType> = ({count, increment, decrement, reset, startValue ,maxValue}) => {
+export const ControlDisplay: React.FC<ControlPropsType> = ({
+                                                               count, increment,
+                                                               decrement, reset, start, max
+                                                           }) => {
     return (
         <div className="app-wrapper">
             <Button
@@ -18,19 +21,19 @@ export const ControlDisplay: React.FC<ControlPropsType> = ({count, increment, de
                 size={"large"}
                 style={{margin: "5px"}}
                 color={"primary"}
-                disabled={count === maxValue} onClick={increment}>Inc</Button>
+                disabled={count === max} onClick={increment}>Inc</Button>
             <Button
                 variant={"contained"}
                 size={"large"}
                 style={{margin: "5px"}}
                 color={"primary"}
-                disabled={count === startValue} onClick={decrement}>Dec</Button>
+                disabled={count === start} onClick={decrement}>Dec</Button>
             <Button
                 variant={"contained"}
                 size={"large"}
                 style={{margin: "5px", textAlign: "center"}}
                 color={"secondary"}
-                disabled={count === startValue} onClick={reset}>Res</Button>
+                disabled={count === start} onClick={reset}>Res</Button>
         </div>
     );
 }
